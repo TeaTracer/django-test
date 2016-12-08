@@ -2,7 +2,7 @@
 LOG="/var/log/app-deploy.log"
 PROJECT="django-test"
 BRANCH="dev" # master or dev
-REPOSITORY="git@github.com:TeaTracer/$PROJECT.git"
+REPOSITORY="https://github.com/TeaTracer/django-test.git"
 
 teelog() {
     echo $(date -u) "|" $1 | tee -a $LOG
@@ -23,9 +23,7 @@ wget --quiet -O - https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | su
 sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt-get autoremove -y
-
-# Custom soft
-sudo apt-get install -y htop vim tmux rsync ansible
+sudo apt-get install -y htop vim git tmux rsync ansible python3-pip
 
 # PostgreSQL
 teelog "Installing PostgreSQL."
@@ -40,7 +38,6 @@ sudo apt-get install -y rabbitmq-server
 teelog "Downloading git project."
 git clone -b $BRANCH $REPOSITORY
 
-# Pip requirenments
+# pip requirenments
 teelog "Installing requirenments."
-sudo apt-get install -y python3-pip
 (cd $PROJECT && sudo pip3 install -r requirenments.txt)
