@@ -16,10 +16,8 @@ Vagrant.configure("2") do |config|
             vb.memory = "512"
             vb.cpus = "2"
         end
-        config.vm.provision "shell",
-            inline: "sudo hostnamectl set-hostname prod"
-        config.vm.provision "shell",
-            inline: "sudo apt-get install -y git && git clone -b #{BRANCH} #{REPOSITORY} && #{PROJECT}/script.sh"
+        config.vm.provision "shell", inline: "sudo hostnamectl set-hostname prod"
+        config.vm.provision "shell", path: "deploy_to_server.sh"
     end
 
     config.vm.define "dev" do |dev|
@@ -30,9 +28,7 @@ Vagrant.configure("2") do |config|
             vb.memory = "512"
             vb.cpus = "2"
         end
-        config.vm.provision "shell",
-            inline: "sudo hostnamectl set-hostname dev"
-        config.vm.provision "shell",
-            inline: "sudo apt-get install -y git && git clone -b #{BRANCH} #{REPOSITORY} && #{PROJECT}/script.sh"
+        config.vm.provision "shell", inline: "sudo hostnamectl set-hostname dev"
+        config.vm.provision "shell", path: "deploy_to_server.sh"
     end
 end
