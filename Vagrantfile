@@ -7,6 +7,7 @@ REPOSITORY = "https://github.com/TeaTracer/#{PROJECT}.git"
 
 Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/trusty64"
+    config.ssh.username = "user"
 
     config.vm.define "prod" do |prod|
         config.vm.network "forwarded_port", guest: 80, host: 1234, auto_correct: true

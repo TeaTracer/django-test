@@ -23,7 +23,7 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt-get autoremove -y
 
-sudo apt-get install -y htop vim nginx tmux rsync ansible python3-pip
+sudo apt-get install -y htop vim nginx curl tmux rsync ansible python3-pip
 
 teelog "Installing PostgreSQL."
 sudo apt-get install -y postgresql-9.2 pgadmin3
