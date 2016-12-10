@@ -1,6 +1,6 @@
 #!/bin/bash
-LOG="/var/log/app-deploy.log"
 PROJECT="django-test"
+LOG="$PROJECT/app-deploy.log"
 BRANCH="dev" # master or dev
 REPOSITORY="https://github.com/TeaTracer/$PROJECT.git"
 
