@@ -3,11 +3,11 @@
 
 PROJECT = "django-test"
 BRANCH = "dev"
+USER = "vagrant"
 REPOSITORY = "https://github.com/TeaTracer/#{PROJECT}.git"
 
 Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/trusty64"
-    config.ssh.username = "user"
 
     config.vm.define "prod" do |prod|
         config.vm.network "forwarded_port", guest: 80, host: 1234, auto_correct: true
@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
             vb.cpus = "4"
         end
         config.vm.provision "shell", inline: "sudo hostnamectl set-hostname prod"
-        config.vm.provision "shell", path: "server_init.sh"
+        config.vm.provision "shell", path: "server_init.sh",  args: "'#{USER}'"
     end
 
     config.vm.define "dev" do |dev|
@@ -30,6 +30,6 @@ Vagrant.configure("2") do |config|
             vb.cpus = "2"
         end
         config.vm.provision "shell", inline: "sudo hostnamectl set-hostname dev"
-        config.vm.provision "shell", path: "server_init.sh"
+        config.vm.provision "shell", path: "server_init.sh",  args: "'#{USER}'"
     end
 end
