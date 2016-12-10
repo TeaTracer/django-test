@@ -20,8 +20,8 @@ echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee -a /etc/apt/s
 wget --quiet -O - https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
 
 sudo apt-get update -y
-# sudo apt-get upgrade -y
-# sudo apt-get autoremove -y
+sudo apt-get upgrade -y
+sudo apt-get autoremove -y
 
 sudo apt-get install -y htop vim git tmux rsync ansible python3-pip
 
@@ -35,7 +35,18 @@ sudo apt-get install -y rabbitmq-server
 teelog "Downloading git project."
 git clone -b $BRANCH $REPOSITORY
 
+teelog "Make virtualenv."
+sudo pip3 install virtualenv virtualenvwrapper
+echo export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3 >> ~/.bashrc
+echo source /usr/local/bin/virtualenvwrapper.sh >> ~/.bashrc
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+mkvirtualenv $PROJECT
+deactivate
+
 teelog "Installing requirenments."
-(cd $PROJECT && sudo pip3 install -r requirenments.txt)
+workon $PROJECT
+(cd $PROJECT && pip3 install -r requirenments.txt)
+deactivate
 
 teelog "Finish deploying."
