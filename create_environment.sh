@@ -32,9 +32,6 @@ echo "postgres:postgres" | sudo chpasswd
 teelog "Installing RabbitMQ."
 sudo apt-get install -y rabbitmq-server
 
-# teelog "Downloading git project."
-# git clone -b $BRANCH $REPOSITORY
-
 teelog "Make virtualenv."
 sudo pip3 install virtualenv virtualenvwrapper
 echo export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3 >> ~/.bashrc
@@ -46,7 +43,7 @@ deactivate
 
 teelog "Installing requirenments."
 workon $PROJECT
-(cd $PROJECT && pip3 install -r requirenments.txt)
+pip3 install -r $PROJECT/requirenments.txt
 deactivate
 
 teelog "Finish deploying."

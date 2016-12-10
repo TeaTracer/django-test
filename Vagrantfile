@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
         config.vm.provision "shell",
             inline: "sudo hostnamectl set-hostname prod"
         config.vm.provision "shell",
-            inline: "sudo apt-get install git && git clone -b #{BRANCH} #{REPOSITORY} && (cd #{PROJECT} && ./script.sh) "
+            inline: "sudo apt-get install -y git && git clone -b #{BRANCH} #{REPOSITORY} && #{PROJECT}/script.sh"
     end
 
     config.vm.define "dev" do |dev|
@@ -33,6 +33,6 @@ Vagrant.configure("2") do |config|
         config.vm.provision "shell",
             inline: "sudo hostnamectl set-hostname dev"
         config.vm.provision "shell",
-            inline: "sudo apt-get install git && git clone -b #{BRANCH} #{REPOSITORY} && (cd #{PROJECT} && ./script.sh) "
+            inline: "sudo apt-get install -y git && git clone -b #{BRANCH} #{REPOSITORY} && #{PROJECT}/script.sh"
     end
 end
