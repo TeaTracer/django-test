@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 PROJECT = "django-test"
-BRANCH = "deployment-script-test"
+BRANCH = "dev"
 REPOSITORY = "https://github.com/TeaTracer/#{PROJECT}.git"
 
 Vagrant.configure("2") do |config|
