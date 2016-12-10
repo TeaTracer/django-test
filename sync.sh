@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/bash
 
 # Example:
 # ./sync dev
@@ -21,5 +21,5 @@ fi
 FROM=$(pwd)
 TO="$1:$FOLDER"
 
-rsync -avz --no-perms --no-owner --no-group --exclude=".git/" $FROM $TO
+rsync -avz --no-perms --no-owner --no-group --exclude=".vagrant/" --exclude=".git/" $FROM $TO
 
