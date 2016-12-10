@@ -1,6 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+PROJECT = "django-test"
+BRANCH = "deployment-script-test"
+REPOSITORY = "https://github.com/TeaTracer/#{PROJECT}.git"
+
 Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/trusty64"
 
@@ -12,7 +16,10 @@ Vagrant.configure("2") do |config|
             vb.memory = "512"
             vb.cpus = "2"
         end
-        config.vm.provision "shell",  inline: "sudo hostnamectl set-hostname prod"
+        config.vm.provision "shell",
+            inline: "sudo hostnamectl set-hostname prod"
+        config.vm.provision "shell",
+            inline: "sudo apt-get install git && git clone -b #{BRANCH} #{REPOSITORY} && (cd #{PROJECT} && ./script.sh) "
     end
 
     config.vm.define "dev" do |dev|
@@ -23,6 +30,9 @@ Vagrant.configure("2") do |config|
             vb.memory = "512"
             vb.cpus = "2"
         end
-        config.vm.provision "shell",  inline: "sudo hostnamectl set-hostname dev"
+        config.vm.provision "shell",
+            inline: "sudo hostnamectl set-hostname dev"
+        config.vm.provision "shell",
+            inline: "sudo apt-get install git && git clone -b #{BRANCH} #{REPOSITORY} && (cd #{PROJECT} && ./script.sh) "
     end
 end

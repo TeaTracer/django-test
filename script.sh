@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 LOG="/var/log/app-deploy.log"
 PROJECT="django-test"
 BRANCH="dev" # master or dev
@@ -23,7 +23,7 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt-get autoremove -y
 
-sudo apt-get install -y htop vim git tmux rsync ansible python3-pip
+sudo apt-get install -y htop vim nginx tmux rsync ansible python3-pip
 
 teelog "Installing PostgreSQL."
 sudo apt-get install -y postgresql-9.2 pgadmin3
@@ -32,15 +32,15 @@ echo "postgres:postgres" | sudo chpasswd
 teelog "Installing RabbitMQ."
 sudo apt-get install -y rabbitmq-server
 
-teelog "Downloading git project."
-git clone -b $BRANCH $REPOSITORY
+# teelog "Downloading git project."
+# git clone -b $BRANCH $REPOSITORY
 
 teelog "Make virtualenv."
 sudo pip3 install virtualenv virtualenvwrapper
 echo export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3 >> ~/.bashrc
 echo source /usr/local/bin/virtualenvwrapper.sh >> ~/.bashrc
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-source /usr/local/bin/virtualenvwrapper.sh
+source `which virtualenvwrapper.sh`
 mkvirtualenv $PROJECT
 deactivate
 
