@@ -1,12 +1,26 @@
 #!/bin/bash
 PROJECT="django-test"
-BRANCH="deployment-script-test"
+BRANCH="dev"
 REPOSITORY="https://github.com/TeaTracer/$PROJECT.git"
 
-if [ "$#" -ne 1 ] ; then
+case "$#" in
+    "0")
+        GET_PROJECT_FROM='--local'
+    ;;
+    "1")
+        GET_PROJECT_FROM=$1
+    ;;
+    *)
     exit 1
-fi
+    ;;
+esac
 
-USER=$1
+case "$GET_PROJECT_FROM" in
+    "-r" | "--remote")
+        sudo apt-get install -y git && git clone -b $BRANCH $REPOSITORY && cd $PROJECT && ./create_environment.sh
+        ;;
+    "-l" | "--local")
+        ./create_environment.sh
+        ;;
+esac
 
-sudo apt-get install -y git && git clone -b $BRANCH $REPOSITORY && su - $USER -c $PROJECT/create_environment.sh
