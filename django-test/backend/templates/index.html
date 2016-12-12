@@ -1,0 +1,9 @@
+{% if datasets%}
+    <ul>
+    {% for dataset in datasets%}
+        <li><a href="/backend/{{ dataset.id }}/">{{ dataset.data_date }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No datasets are available.</p>
+{% endif %}
