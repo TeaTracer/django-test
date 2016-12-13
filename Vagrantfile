@@ -22,8 +22,9 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.define "dev" do |dev|
-        config.vm.network "forwarded_port", guest: 80, host: 1235, auto_correct: true
-        config.vm.network "forwarded_port", guest: 5555, host: 5555, auto_correct: true
+        config.vm.network "forwarded_port", guest: 80, host: 1235, auto_correct: true     # django app
+        config.vm.network "forwarded_port", guest: 5555, host: 5555, auto_correct: true   # flower
+        config.vm.network "forwarded_port", guest: 15672, host: 15672, auto_correct: true # rabbitmq
         config.vm.provider "virtualbox" do |vb|
             vb.gui = false
             vb.name = "dev"

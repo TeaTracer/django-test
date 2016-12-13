@@ -44,6 +44,10 @@ tmux send-keys "sudo -u postgres psql djdb" C-m
 
 teelog "Installing RabbitMQ."
 sudo apt-get install -y rabbitmq-server
+sudo rabbitmq-plugins enable rabbitmq_management
+sudo rabbitmqctl add_user test test
+sudo rabbitmqctl set_user_tags test administrator
+sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
 
 teelog "Make virtualenv."
 sudo pip3 install virtualenv virtualenvwrapper
@@ -66,8 +70,21 @@ yes "yes" | python $PROJECT/manage.py collectstatic
 teelog "Gunicorn setup"
 tmux new-window -t $SESSION:2 -n 'Gunicorn'
 tmux select-pane -t 0
-tmux send-keys "workon $PROJECT" C-m
+tmux send-keys "cd $PROJECT && workon $PROJECT" C-m
 tmux send-keys "gunicorn --bind unix:/tmp/gunicorn.sock $PROJECT.wsgi:application " C-m
+
+teelog "Celery setup"
+tmux new-window -t $SESSION:3 -n 'Celery'
+tmux select-pane -t 0
+tmux send-keys "cd $PROJECT && workon $PROJECT" C-m
+tmux send-keys "celery -A django-test worker -n one &" C-m
+tmux send-keys "celery -A django-test worker -n two &" C-m
+
+teelog "Flower setup"
+tmux new-window -t $SESSION:4 -n 'Flower'
+tmux select-pane -t 0
+tmux send-keys "cd $PROJECT && workon $PROJECT" C-m
+tmux send-keys "celery -A django-test flower" C-m
 
 teelog "Nginx setup"
 sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.backup
