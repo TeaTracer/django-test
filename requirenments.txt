@@ -4,3 +4,4 @@ flower
 gunicorn
 psycopg2
 djangorestframework
+celery

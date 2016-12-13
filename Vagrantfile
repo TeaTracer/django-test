@@ -23,6 +23,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "dev" do |dev|
         config.vm.network "forwarded_port", guest: 80, host: 1235, auto_correct: true
+        config.vm.network "forwarded_port", guest: 5555, host: 5555, auto_correct: true
         config.vm.provider "virtualbox" do |vb|
             vb.gui = false
             vb.name = "dev"

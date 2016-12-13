@@ -34,10 +34,9 @@ sudo apt-get install -y postgresql-9.2 pgadmin3 libpq-dev
 echo "postgres:postgres" | sudo chpasswd
 sudo -u postgres createdb djdb
 sudo -u postgres psql -c \
-    "CREATE DATABASE djdb; \
-     CREATE USER djdb_user WITH PASSWORD 'djdb_password';\
-     ALTER ROLE djdb_user SET client_encoding TO 'utf8';\
-     GRANT ALL PRIVILEGES ON DATABASE djdb TO djdb_user;"
+     "CREATE USER djdb_user WITH PASSWORD 'djdb_password';\
+      ALTER ROLE djdb_user SET client_encoding TO 'utf8';\
+      GRANT ALL PRIVILEGES ON DATABASE djdb TO djdb_user;"
 tmux new-window -t $SESSION:1 -n 'Postgres'
 tmux select-pane -t 0
 tmux send-keys "sudo -u postgres psql djdb" C-m
@@ -62,6 +61,7 @@ pip3 install -r ./requirenments.txt
 teelog "Django setup"
 python $PROJECT/manage.py makemigrations
 python $PROJECT/manage.py migrate
+yes "yes" | python $PROJECT/manage.py collectstatic
 
 teelog "Gunicorn setup"
 tmux new-window -t $SESSION:2 -n 'Gunicorn'
