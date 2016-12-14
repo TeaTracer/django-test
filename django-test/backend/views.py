@@ -1,4 +1,5 @@
 import random
+import json
 from rest_framework import viewsets
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -20,7 +21,8 @@ def dataset_view(request, dataset_id):
     return HttpResponse(dataset)
 
 def add_random_dataset(request):
-    dataset = Dataset.objects.create(data=_make_random_dataset())
+    new_dataset = json.dumps(_make_random_dataset())
+    dataset = Dataset.objects.create(data=new_dataset)
     return HttpResponse(dataset)
 
 def task(request):
@@ -29,7 +31,6 @@ def task(request):
         for dataset in datasets:
             print(dataset.id, file=f)
     return HttpResponse("Ok, " + str([dataset.id for dataset in datasets]))
-
 
 class DatasetView(viewsets.ModelViewSet):
     queryset = Dataset.objects.all()

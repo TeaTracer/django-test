@@ -30,7 +30,7 @@ sudo apt-get autoremove -y
 sudo apt-get install -y htop git vim nginx curl tmux rsync ansible python3-pip
 
 teelog "Installing PostgreSQL."
-sudo apt-get install -y postgresql-9.2 pgadmin3 libpq-dev
+sudo apt-get install -y postgresql-9.6 pgadmin3 libpq-dev
 echo "postgres:postgres" | sudo chpasswd
 sudo -u postgres createdb djdb
 sudo -u postgres psql -c \
