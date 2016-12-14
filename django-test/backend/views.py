@@ -8,30 +8,20 @@ from django.template import loader
 from .models import Dataset
 from .serializers import DatasetSerializer
 
-def index(request):
+def table_view(request):
     datasets = Dataset.objects.order_by('-data_date')
-    template = loader.get_template('index.html')
+    template = loader.get_template('table.html')
     context = {
         'datasets': datasets,
     }
     return HttpResponse(template.render(context, request))
-
-def dataset_view(request, dataset_id):
-    dataset = Dataset.objects.get(pk=dataset_id)
-    return HttpResponse(dataset)
 
 def add_random_dataset(request):
     new_dataset = json.dumps(_make_random_dataset())
     dataset = Dataset.objects.create(data=new_dataset)
     return HttpResponse(dataset)
 
-def task(request):
-    datasets = Dataset.objects.all()
-    with open("tasks.log", 'a') as f:
-        for dataset in datasets:
-            print(dataset.id, file=f)
-    return HttpResponse("Ok, " + str([dataset.id for dataset in datasets]))
-
+# REST
 class DatasetView(viewsets.ModelViewSet):
     queryset = Dataset.objects.all()
     serializer_class = DatasetSerializer
@@ -41,4 +31,14 @@ def _make_random_dataset():
     dataset_length = r()
     dataset_list = [[r(), r()] for _ in range(dataset_length)]
     return dataset_list
+
+def dataform_view(request):
+   dataset = []
+   if request.method == "POST":
+      dataForm = DataForm(request.POST)
+      if dataForm.is_valid():
+         dataset = dataForm.cleaned_data['data']
+   else:
+      MyLoginForm = DataForm()
+   return render(request, 'dataform.html')
 

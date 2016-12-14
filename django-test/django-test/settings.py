@@ -83,14 +83,40 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Europe/Moscow'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'backend/static')
+
+CELERY_QUEUES = {
+    'create_json_request': {
+        "exchange": "create_json_request",
+        "binding_key": "create_json_request",
+    },
+    'do_task': {
+        'exchange': 'do_task',
+        'routing_key': 'do_task',
+    },
+    'save_result': {
+        'exchange': 'save_result',
+        'routing_key': 'save_result',
+    },
+}
+
+CELERY_ROUTES = {
+        "backend.tasks.create_json_request": {
+            "queue": "create_json_request",
+            "routing_key": "create_json_request",
+        },
+        "backend.tasks.do_task": {
+            "queue": "do_task",
+            "routing_key": "do_task",
+        },
+        "backend.tasks.save_result": {
+            "queue": "save_result",
+            "routing_key": "save_result",
+        },
+}

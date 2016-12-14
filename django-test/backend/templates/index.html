@@ -1,9 +1,17 @@
-{% if datasets%}
-    <ul>
-    {% for dataset in datasets%}
-        <li><a href="/backend/{{ dataset.id }}/">{{ dataset.data_date }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No datasets are available.</p>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Django-test</title>
+  </head>
+  <body>
+
+    {% block navigation_bar %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+  </body>
+</html>
+

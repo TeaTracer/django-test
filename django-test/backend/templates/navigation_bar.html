@@ -1,0 +1,16 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+            <li {% if active_tab == "Upload" %}class="active"{% end %}><a href="/dataform">Upload</a></li>
+            <li {% if active_tab == "Data" %}class="active"{% end %}><a href="/table">Table</a></li>
+        </ul>
+        <ul class="nav pull-right">
+          <li><a href="https://github.com/TeaTracer/django-test" target="_blank">Code</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
