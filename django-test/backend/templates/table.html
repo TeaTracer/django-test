@@ -1,23 +1,7 @@
 {% extends "index.html" %}
 
-{% block navigation_bar %}
-    {% module Template("navigation_bar.html", active_tab="Data") %}
-{% endblock %}
-
-{% block container %}
+{% block content %}
   <div class="container-fluid">
-    <!-- <div class="panel panel-default"> -->
-      <!-- <div class="btn-group"> -->
-        <!-- <button class="btn dropdown-toggle" data-toggle="dropdown"><span -->
-          <!-- class="caret"></span></button> -->
-        <!-- <ul class="dropdown-menu"> -->
-          <!-- <li><a href="#" onclick="flower.shutdown_selected(event);">Shut Down</a></li> -->
-          <!-- <li><a href="#" onclick="flower.restart_selected(event);">Restart Pool</a></li> -->
-          <!-- <li><a href="#" onclick="flower.refresh_selected(event);">Refresh</a></li> -->
-        <!-- </ul> -->
-      <!-- </div> -->
-    <!-- </div> -->
-
     <table id="datasets-table" class="table table-bordered table-striped">
       <thead>
         <tr>
@@ -31,16 +15,17 @@
       </thead>
       <tbody>
         {% for data in datasets %}
-        <tr id="{{ '<a href="/dataset/{}"></a>'.format(data.id) }}">
+        <tr>
             <td>{{ data.id }}</td>
-            <td>{{ data.data' }}</td>
-            <td>{{ data.result' }}</td>
-            <td>{{ data.exception' }}</td>
-            <td>{{ data.in_process' }}</td>
-            <td>{{ data.data_date' }}</td>
+            <td>{{ data.data }}</td>
+            <td>{{ data.result }}</td>
+            <td>{{ data.exception }}</td>
+            <td>{{ data.in_process }}</td>
+            <td>{{ data.data_date }}</td>
         </tr>
-        {% end %}
+        {% endfor %}
       </tbody>
     </table>
+  </div>
 {% endblock %}
 

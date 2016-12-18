@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
         config.vm.provider "virtualbox" do |vb|
             vb.gui = false
             vb.name = "dev"
-            vb.memory = "512"
+            vb.memory = "1024"
             vb.cpus = "2"
         end
         config.vm.provision "shell", inline: "sudo hostnamectl set-hostname dev"

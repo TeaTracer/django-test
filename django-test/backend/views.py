@@ -1,11 +1,12 @@
 import random
 import json
 from rest_framework import viewsets
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.template import loader
 from .models import Dataset
+from .forms import DataForm
 from .serializers import DatasetSerializer
 
 def table_view(request):
@@ -17,8 +18,8 @@ def table_view(request):
     return HttpResponse(template.render(context, request))
 
 def add_random_dataset(request):
-    new_dataset = json.dumps(_make_random_dataset())
-    dataset = Dataset.objects.create(data=new_dataset)
+    dataset_d = json.dumps(_make_random_dataset())
+    dataset = Dataset.objects.create(data=dataset_d)
     return HttpResponse(dataset)
 
 # REST
@@ -32,13 +33,19 @@ def _make_random_dataset():
     dataset_list = [[r(), r()] for _ in range(dataset_length)]
     return dataset_list
 
-def dataform_view(request):
-   dataset = []
-   if request.method == "POST":
-      dataForm = DataForm(request.POST)
-      if dataForm.is_valid():
-         dataset = dataForm.cleaned_data['data']
-   else:
-      MyLoginForm = DataForm()
-   return render(request, 'dataform.html')
+from django.views.generic.edit import FormView
 
+class DataformView(FormView):
+    form_class = DataForm
+    template_name = "dataform.html"
+    success_url = '/table'
+
+    def form_valid(self, form):
+        numbers = list(map(int, form.cleaned_data['data']))
+        pairs = list(zip(numbers[::2],  numbers[1::2]))
+        dataset = json.dumps(pairs)
+        Dataset.objects.create(data=dataset)
+        return redirect('table')
+
+    def form_invalid(self, form):
+        return redirect('dataform')

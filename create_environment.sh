@@ -64,6 +64,7 @@ pip3 install -r ./requirenments.txt
 
 teelog "Django setup"
 python $PROJECT/manage.py makemigrations
+python $PROJECT/manage.py makemigrations backend
 python $PROJECT/manage.py migrate
 yes "yes" | python $PROJECT/manage.py collectstatic
 

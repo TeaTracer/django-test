@@ -1,10 +1,15 @@
 {% extends "index.html" %}
 
 {% block navigation_bar %}
-    {% module Template("navigation_bar.html", active_tab="Upload") %}
 {% endblock %}
 
-{% block container %}
-    Dataform
+{% block content%}
+    <form action="/dataform" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- <label for="numbers">Numbers: </label> -->
+        <!-- <input id="numbers" type="text" name="numbers" value="{{ data }}"> -->
+        <button type="submit" class="save btn btn-default">Upload</button>
+    </form>
 {% endblock %}
 
