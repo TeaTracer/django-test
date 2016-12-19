@@ -8,6 +8,7 @@ from django.template import loader
 from .models import Dataset
 from .forms import DataForm
 from .serializers import DatasetSerializer
+from .celery import send_to_pipeline
 
 def table_view(request):
     datasets = Dataset.objects.order_by('-data_date')
@@ -26,6 +27,11 @@ def add_random_dataset(request):
 class DatasetView(viewsets.ModelViewSet):
     queryset = Dataset.objects.all()
     serializer_class = DatasetSerializer
+
+def runView(request):
+    ids = Dataset.objects.values_list('id',  flat=True)
+    send_to_pipeline(ids)
+    return redirect('table')
 
 def _make_random_dataset():
     r = lambda : random.randint(10, 30)
