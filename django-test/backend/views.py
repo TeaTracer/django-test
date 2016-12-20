@@ -26,7 +26,11 @@ def runView(request):
     ids = Dataset.objects.values_list('id',  flat=True)
     send_to_pipeline(ids)
     n = len(ids)
-    return HttpResponse("Ok. Run {} tasks.".format(n))
+    context = {
+        'text': "Ok. Run {} tasks.".format(n),
+    }
+    template = loader.get_template('index.html')
+    return HttpResponse(template.render(context, request))
 
 
 # Status
