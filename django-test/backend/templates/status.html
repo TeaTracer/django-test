@@ -4,12 +4,8 @@
 {% block content %}
 
 {% if is_fail %}
-    <div class="alert alert-danger" role="alert">
-        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-        <span class="sr-only"></span>
-        There are some exceptions. <a href="/status">Check status</a>
-    </div>
-{% endif %}
+    <h> There are some exceptions. </h>
+
 
 {% show_pagination datasets %}
 
@@ -19,9 +15,7 @@
         <tr>
             <th>Id</th>
             <th>Dataset</th>
-            <th>Result</th>
             <th>Exception</th>
-            <th>Processing</th>
             <th>Uploaded</th>
         </tr>
       </thead>
@@ -30,14 +24,17 @@
         <tr>
             <td><a href="/api/dataset/{{ data.id }}">{{ data.id }}</a></td>
             <td>{{ data.data }}</td>
-            <td>{{ data.result }}</td>
             <td>{{ data.exception }}</td>
-            <td>{{ data.in_process }}</td>
             <td>{{ data.data_date }}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-{% endblock %}
 
+{% else %}
+    <h> There are no exceptions. </h>
+
+{% endif %}
+
+{% endblock %}
