@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title>Django-test</title>
+      <style type="text/css">
+          body {
+              padding-top: 65px;
+          }
+      </style>
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li><a href="/table">Table</a></li>
+          <li><a href="/dataform">Upload</a></li>
+          <li><a href="/status">Status</a></li>
+          <li><a href="/run">Run</a></li>
+          <li><a href="https://github.com/TeaTracer/django-test" target="_blank">Code</a></li>
+        </ul>
+      </div>
+    </div>
+
+    {% if text %}
+     {{text}}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous">
+    </script>
+
+  </body>
+
+</html>
+
